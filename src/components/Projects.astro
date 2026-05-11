@@ -1,0 +1,160 @@
+---
+const featured = [
+  {
+    title: 'safq.ai',
+    description: 'AI-powered SaaS platform with Stripe billing, NextAuth v5, Prisma ORM, and a full dashboard with API proxy to the AI orchestration backend.',
+    tech: ['Next.js 16', 'Stripe', 'Prisma', 'React', 'TypeScript'],
+    label: 'Live Website',
+    liveUrl: 'https://safq.ai',
+  },
+  {
+    title: 'drivy.ma',
+    description: 'Car rental platform — full deployment architecture with DNS configuration, Railway hosting, and Docker containerization.',
+    tech: ['Railway', 'Docker', 'DevOps', 'Full-Stack'],
+    label: 'Live Website',
+    liveUrl: 'https://drivy.ma',
+  },
+  {
+    title: 'AI Customer Service Platform',
+    description: 'Production AI orchestration — 8+ channels, 7 AI models, hybrid RAG, visual product matching, voice responses, and agentic function calling. 1,956+ tests.',
+    tech: ['Java 21', 'Spring Boot', 'pgvector', 'Redis', 'Gemini', 'Claude'],
+    label: 'Featured Project',
+    slug: 'ai-orchestration',
+    color: 'rgba(100,255,218,0.3)',
+    bgGradient: 'linear-gradient(135deg, rgba(100,255,218,0.04) 0%, rgba(17,34,64,1) 100%)',
+    lines: [80, 55, 70, 40, 90, 60, 45, 75, 50, 65, 85, 35],
+  },
+  {
+    title: 'Unified MCP Server Architecture',
+    description: 'Aggregated multiple Zoho MCPs across SaaS accounts into one Model Context Protocol server — enabling Claude AI to interact with enterprise systems.',
+    tech: ['MCP', 'Claude AI', 'API Aggregation', 'TypeScript'],
+    label: 'Featured Project',
+    slug: 'mcp-architecture',
+    color: 'rgba(129,140,248,0.3)',
+    bgGradient: 'linear-gradient(135deg, rgba(129,140,248,0.04) 0%, rgba(17,34,64,1) 100%)',
+    lines: [60, 85, 40, 70, 55, 90, 45, 65, 80, 50, 35, 75],
+  },
+  {
+    title: 'Chatwoot CRM Customization',
+    description: '28 overlay files deployed via Docker bind-mount. WhatsApp campaign engine (~900 lines), data import pipeline, and template variable resolution.',
+    tech: ['Ruby on Rails', 'Vue.js', 'Docker', 'PostgreSQL'],
+    label: 'Production System',
+    slug: 'chatwoot-crm',
+    color: 'rgba(251,191,36,0.25)',
+    bgGradient: 'linear-gradient(135deg, rgba(251,191,36,0.03) 0%, rgba(17,34,64,1) 100%)',
+    lines: [75, 50, 85, 60, 40, 70, 90, 55, 65, 80, 45, 70],
+  },
+];
+
+const other = [
+  { title: 'Enterprise Portfolio', description: '5+ confidential client websites across multiple industries.', tech: ['Full-Stack', 'Enterprise'], confidential: true },
+];
+---
+
+<section id="projects" class="relative py-16 lg:py-24 px-6 lg:px-12 max-w-screen-xl mx-auto overflow-hidden">
+  <!-- Ambient glow -->
+  <div class="absolute top-[30%] -right-[20%] w-[600px] h-[600px] glow-purple rounded-full pointer-events-none" aria-hidden="true"></div>
+
+  <h2 class="numbered-heading mb-12" data-animate>
+    <span class="mono">03.</span> Things I've Built
+  </h2>
+
+  <!-- Featured projects with mockup visuals -->
+  <div class="space-y-20 lg:space-y-28 mb-20">
+    {featured.map((project, i) => (
+      <div data-animate class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <!-- Mockup window -->
+        <div class={`lg:col-span-7 ${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+          <div class="mockup-window shadow-2xl shadow-black/20">
+            <div class="mockup-header">
+              <span class="mockup-dot" style="background: rgba(255,95,87,0.7)"></span>
+              <span class="mockup-dot" style="background: rgba(254,188,46,0.7)"></span>
+              <span class="mockup-dot" style="background: rgba(40,201,64,0.7)"></span>
+              <span class="ml-auto font-mono text-[10px] text-text-dim/30">
+                {project.liveUrl ? project.liveUrl.replace('https://', '') : `~/${project.slug}`}
+              </span>
+            </div>
+            {project.liveUrl ? (
+              <div class="mockup-body relative group/iframe">
+                <iframe
+                  src={project.liveUrl}
+                  title={`${project.title} live preview`}
+                  class="w-full h-full border-0 pointer-events-none"
+                  loading="lazy"
+                  sandbox="allow-scripts allow-same-origin"
+                ></iframe>
+                <!-- Overlay to visit -->
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="absolute inset-0 flex items-center justify-center bg-bg/60 opacity-0 group-hover/iframe:opacity-100 transition-opacity duration-300 cursor-pointer"
+                >
+                  <span class="btn-primary !py-2 !px-5 text-sm">
+                    Visit {project.liveUrl.replace('https://', '')}
+                    <svg class="w-4 h-4 inline-block ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  </span>
+                </a>
+              </div>
+            ) : (
+              <div class="mockup-body p-5 lg:p-6 space-y-2.5" style={`background: ${project.bgGradient}`}>
+                {project.lines.map((w) => (
+                  <div class="code-line" style={`width: ${w}%; background: ${project.color}`}></div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class={`lg:col-span-5 ${i % 2 === 1 ? 'lg:order-1 lg:text-right' : ''}`}>
+          <p class="mono text-xs mb-2">{project.label}</p>
+          <h3 class="heading-md mb-4">
+            {project.liveUrl ? (
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">
+                {project.title}
+                <svg class="w-5 h-5 inline-block ml-1 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            ) : (
+              project.title
+            )}
+          </h3>
+          <p class="text-sm text-text-dim leading-relaxed mb-5">{project.description}</p>
+          <ul class={`flex flex-wrap gap-3 font-mono text-xs text-text-dim ${i % 2 === 1 ? 'lg:justify-end' : ''}`}>
+            {project.tech.map((t) => <li>{t}</li>)}
+          </ul>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Other projects -->
+  <div data-animate class="text-center mb-8">
+    <h3 class="heading-md text-lg">Other Noteworthy Projects</h3>
+  </div>
+
+  <div class="grid gap-4 max-w-sm mx-auto" data-stagger>
+    {other.map((project) => (
+      <div class="card flex flex-col h-full group">
+        <div class="flex items-center justify-between mb-4">
+          <svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776"/></svg>
+          <div class="flex items-center gap-3">
+            {project.confidential && (
+              <span class="font-mono text-[10px] text-amber-400/70 uppercase tracking-wider">NDA</span>
+            )}
+            {project.link && (
+              <a href={project.link} target="_blank" rel="noopener noreferrer" class="text-text-dim hover:text-accent transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            )}
+          </div>
+        </div>
+        <h4 class="text-white font-semibold mb-2 group-hover:text-accent transition-colors">{project.title}</h4>
+        <p class="text-sm text-text-dim leading-relaxed flex-1 mb-4">{project.description}</p>
+        <ul class="flex flex-wrap gap-3 mt-auto">
+          {project.tech.map((t) => <li class="tag">{t}</li>)}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
