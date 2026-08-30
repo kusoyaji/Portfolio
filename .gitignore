@@ -2,3 +2,38 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+.vercel
+
+# local review artefacts
+.review/
+.next/
+next-env.d.ts
+
+# personal photo — kept locally, never served or tracked
+Mypic.jpg
+docs/personal-assets/
+
+# CV LaTeX sources - personal, kept local only
+*.tex
+*.pdf
+
+# Employer / internal documentation - NEVER commit (public remote)
+ChatIntanceMdfilesForInformation/
+AIProjectDoneByMeAlone/
+CvsAndTexFiles/
+*_INTEGRATION_REPORT.md
+
+# Confidential client list - must not reach the public remote
+.claude/redactions.txt
+
+Cvs/
+
+Cvs2Page/
+
+# Application log - company names and outcomes, public remote
+career/
+
+CvsConcise/
+
+# Playwright MCP scratch output
+.playwright-mcp/

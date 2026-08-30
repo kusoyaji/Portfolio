@@ -1,0 +1,133 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Editorial paper palette. Warm off-white canvas, near-black ink,
+     a single burnt-amber accent. Inversions use ink as the surface. */
+  --color-paper: #f5f3ee;
+  --color-paper-deep: #ebe7de;
+  --color-ink: #14120e;
+  --color-ink-soft: #57534e;
+  /* Darkened from the original #8a8578, which only reached ~3.3:1 on paper.
+     Metadata is still content — it has to be readable, not just present. */
+  --color-ink-faint: #6b665a;
+  --color-amber: #b45309;
+  --color-amber-lift: #d97706;
+  --color-rule: rgba(20, 18, 14, 0.14);
+  --color-rule-invert: rgba(245, 243, 238, 0.16);
+
+  --font-display: var(--font-instrument-serif), Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Emil Kowalski's curves. Strong ease-out is the default for UI;
+     ios is reserved for anything that behaves like a sheet. */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@layer base {
+  html {
+    /* Lenis drives scrolling; native smooth would fight it. */
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-amber);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Lenis requires the wrapper to not clip; keep overflow honest. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+  /* Section eyebrow: mono, tracked out, index number in amber. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
+
+  .rule {
+    height: 1px;
+    background: var(--color-rule);
+    border: 0;
+  }
+
+  /* Link with an underline that grows from the left on hover.
+     Origin-aware so it reads as one gesture, not a fade. */
+  .ink-link {
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ink-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms var(--ease-out-strong);
+  }
+
+  @media (hover: hover) {
+    .ink-link:hover::after {
+      transform: scaleX(1);
+    }
+  }
+
+  .ink-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Movement is decorative; meaning must survive without it.
+   Opacity is kept so reveals still resolve rather than vanishing. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
