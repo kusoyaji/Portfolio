@@ -3,7 +3,6 @@ import { Proof } from '@/components/sections/Proof';
 import { Work } from '@/components/sections/Work';
 import { Showcase } from '@/components/sections/Showcase';
 import { Capabilities } from '@/components/sections/Capabilities';
-import { StackDepth } from '@/components/sections/StackDepth';
 import { Flow } from '@/components/sections/Flow';
 import { Experience } from '@/components/sections/Experience';
 import { About } from '@/components/sections/About';
@@ -18,7 +17,6 @@ export default function HomePage() {
       <Flow />
       <Showcase />
       <Capabilities />
-      <StackDepth />
       <Experience />
       <About />
       <Contact />

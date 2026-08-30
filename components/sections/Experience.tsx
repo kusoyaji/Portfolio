@@ -7,7 +7,7 @@ export function Experience() {
       <div className="mx-auto max-w-[88rem]">
         <Reveal>
           <p className="eyebrow text-paper/60">
-            <span className="text-amber-lift">06</span> — Experience
+            <span className="text-amber-lift">05</span> — Experience
           </p>
         </Reveal>
           <Words className="display mt-5 max-w-[18ch] text-[clamp(2.5rem,6vw,5rem)] text-paper" parts={[{ t: 'Professional experience.' }]} />

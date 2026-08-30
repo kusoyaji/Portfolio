@@ -7,7 +7,7 @@ export function Contact() {
       <div className="mx-auto max-w-[88rem]">
         <Reveal>
           <p className="eyebrow">
-            <span className="text-amber">08</span> — Contact
+            <span className="text-amber">07</span> — Contact
           </p>
 
           <Words className="display mt-6 max-w-[16ch] text-[clamp(3rem,8vw,7rem)]" parts={[{ t: 'Available for new' }, { t: 'roles', accent: true }, { t: 'and projects.' }]} />

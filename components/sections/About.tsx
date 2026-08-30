@@ -12,7 +12,7 @@ export function About() {
           <div className="lg:col-span-4">
             <Reveal>
               <p className="eyebrow">
-                <span className="text-amber">07</span> — Background
+                <span className="text-amber">06</span> — Background
               </p>
             </Reveal>
             <Words

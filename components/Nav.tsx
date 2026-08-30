@@ -22,12 +22,34 @@ export function Nav() {
   const { scrollY, scrollYProgress } = useScroll();
   const [lifted, setLifted] = useState(false);
   const [open, setOpen] = useState(false);
+  // False on the server AND on the first client render, so hydration matches;
+  // the effect below is what turns it on.
+  const [overDark, setOverDark] = useState(false);
 
   useMotionValueEvent(scrollY, 'change', (y) => {
     // Hysteresis: a single threshold flickers the bar when a trackpad
     // hovers around the boundary.
     setLifted((was) => (was ? y > 24 : y > 72));
   });
+
+  useEffect(() => {
+    const hero = document.querySelector('[data-dark-hero]');
+    if (!hero) return;
+    // The bar occupies roughly the top 64px; invert while the hero still
+    // covers that band.
+    const check = () => setOverDark(hero.getBoundingClientRect().bottom > 64);
+    check();
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
+    return () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+  }, []);
+
+  // Light type only while the bar is transparent over the hero. Once the paper
+  // backdrop has faded in, or the mobile sheet is open, it goes back.
+  const light = overDark && !lifted && !open;
 
   useEffect(() => {
     if (!open) return;
@@ -80,7 +102,7 @@ export function Nav() {
         >
           <Link
             href="/"
-            className="relative z-50 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-opacity duration-200 hover:opacity-60"
+            className={`relative z-50 font-mono text-xs uppercase tracking-[0.14em] transition-[color,opacity] duration-300 hover:opacity-60 ${light ? 'text-paper' : 'text-ink'}`}
             onClick={() => setOpen(false)}
           >
             {profile.name}
@@ -92,7 +114,7 @@ export function Nav() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="ink-link font-mono text-xs uppercase tracking-[0.1em] text-ink-soft"
+                    className={`ink-link font-mono text-xs uppercase tracking-[0.1em] transition-colors duration-300 ${light ? 'text-paper/75' : 'text-ink-soft'}`}
                   >
                     {link.label}
                   </Link>
@@ -102,7 +124,7 @@ export function Nav() {
 
             <a
               href={`mailto:${profile.email}`}
-              className="hidden rounded-full bg-ink px-4 py-2 font-mono text-[11px] uppercase tracking-[0.1em] text-paper transition-[transform,opacity] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:opacity-85 active:scale-[0.97] active:duration-[120ms] sm:inline-block"
+              className={`hidden rounded-full px-4 py-2 font-mono text-[11px] uppercase tracking-[0.1em] transition-[transform,opacity,background-color,color] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:opacity-85 active:scale-[0.97] active:duration-[120ms] sm:inline-block ${light ? 'bg-paper text-ink' : 'bg-ink text-paper'}`}
             >
               Get in touch
             </a>
@@ -120,12 +142,12 @@ export function Nav() {
                   fixed header on every frame instead of compositing. */}
               <span aria-hidden className="relative block h-3 w-6">
                 <motion.span
-                  className="absolute left-0 top-0 block h-px w-6 bg-ink"
+                  className={`absolute left-0 top-0 block h-px w-6 transition-colors duration-300 ${light ? 'bg-paper' : 'bg-ink'}`}
                   animate={{ y: open ? 5 : 0, rotate: open ? 45 : 0 }}
                   transition={{ duration: 0.25, ease: EASE_OUT }}
                 />
                 <motion.span
-                  className="absolute left-0 top-[11px] block h-px w-6 bg-ink"
+                  className={`absolute left-0 top-[11px] block h-px w-6 transition-colors duration-300 ${light ? 'bg-paper' : 'bg-ink'}`}
                   animate={{ y: open ? -6 : 0, rotate: open ? -45 : 0 }}
                   transition={{ duration: 0.25, ease: EASE_OUT }}
                 />
